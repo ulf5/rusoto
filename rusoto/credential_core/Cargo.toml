@@ -7,8 +7,8 @@ authors = [
 ]
 license = "MIT"
 description = "AWS credential tooling"
-documentation = "https://docs.rs/rusoto_credential"
-name = "rusoto_credential"
+documentation = "https://docs.rs/rusoto_credential_core"
+name = "rusoto_credential_core"
 readme = "README.md"
 repository = "https://github.com/rusoto/rusoto"
 version = "0.45.0"
@@ -32,10 +32,6 @@ serde_json = "1.0"
 shlex = "0.1"
 tokio = { version = "0.2", features = ["macros", "process"] }
 zeroize = "1"
-
-[dependencies.rusoto_credential_core]
-path = "../credential_core"
-version = "0.45.0"
 
 [dev-dependencies]
 lazy_static = "1.4"

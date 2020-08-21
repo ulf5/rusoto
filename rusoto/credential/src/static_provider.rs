@@ -3,7 +3,7 @@
 use async_trait::async_trait;
 use chrono::{Duration, Utc};
 
-use crate::{AwsCredentials, CredentialsError, ProvideAwsCredentials};
+use rusoto_credential_core::{AwsCredentials, CredentialsError, ProvideAwsCredentials};
 
 /// Provides AWS credentials from statically/programmatically provided strings.
 #[derive(Clone, Debug)]
@@ -42,22 +42,22 @@ impl StaticProvider {
 
     /// Gets the AWS Access Key ID for this Static Provider.
     pub fn get_aws_access_key_id(&self) -> &str {
-        &self.credentials.key
+        &self.credentials.aws_access_key_id()
     }
 
     /// Gets the AWS Secret Access Key for this Static Provider.
     pub fn get_aws_secret_access_key(&self) -> &str {
-        &self.credentials.secret
+        &self.credentials.aws_secret_access_key()
     }
 
     /// Determines if this Static Provider was given a Token.
     pub fn has_token(&self) -> bool {
-        self.credentials.token.is_some()
+        self.credentials.token().is_some()
     }
 
     /// Gets The Token this Static Provider was given.
     pub fn get_token(&self) -> &Option<String> {
-        &self.credentials.token
+        &self.credentials.token()
     }
 
     /// Returns the length in seconds this Static Provider will be valid for.
@@ -70,7 +70,7 @@ impl StaticProvider {
 impl ProvideAwsCredentials for StaticProvider {
     async fn credentials(&self) -> Result<AwsCredentials, CredentialsError> {
         let mut creds = self.credentials.clone();
-        creds.expires_at = self.valid_for.map(|v| Utc::now() + Duration::seconds(v));
+        creds.set_expires_at(self.valid_for.map(|v| Utc::now() + Duration::seconds(v)));
         Ok(creds)
     }
 }

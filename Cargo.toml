@@ -4,6 +4,7 @@ members = [
     "rusoto/credential_service_mock",
     "rusoto/core",
     "rusoto/credential",
+    "rusoto/credential_core",
     "rusoto/signature",
     "rusoto/services/accessanalyzer",
     "rusoto/services/acm",
